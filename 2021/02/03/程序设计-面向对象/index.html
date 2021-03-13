@@ -1,0 +1,367 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>程设C++-面向对象 | Jedges</title><meta name="keywords" content="c++"><meta name="author" content="Jedges"><meta name="copyright" content="Jedges"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="面向对象与过程 面向对象程序设计  一个面向对象程序由一些对象构成 对象是由一些数据及可施于这些数据上的操作所组成的封装体， 对数据的操作是通过向包含数据的对象发送消息（调用对象提供的操作）来实现。 对象的特征由相应的类来描述，一个类的特征可以从其它的类继承。 面向对象程序的执行过程体现为各个对象之间相互发送和处理消息。  数据抽象与封装。  数据抽象   数据的使用者只需要知道对数据能实施那些操">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程设C++-面向对象">
+<meta property="og:url" content="https://jedges.top/2021/02/03/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:site_name" content="Jedges">
+<meta property="og:description" content="面向对象与过程 面向对象程序设计  一个面向对象程序由一些对象构成 对象是由一些数据及可施于这些数据上的操作所组成的封装体， 对数据的操作是通过向包含数据的对象发送消息（调用对象提供的操作）来实现。 对象的特征由相应的类来描述，一个类的特征可以从其它的类继承。 面向对象程序的执行过程体现为各个对象之间相互发送和处理消息。  数据抽象与封装。  数据抽象   数据的使用者只需要知道对数据能实施那些操">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jedges.top/img/cover%20(6).jpg">
+<meta property="article:published_time" content="2021-02-03T07:41:17.000Z">
+<meta property="article:modified_time" content="2021-02-03T08:29:02.007Z">
+<meta property="article:author" content="Jedges">
+<meta property="article:tag" content="c++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jedges.top/img/cover%20(6).jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jedges.top/2021/02/03/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="msvalidate.01" content="90cd84211e5b1a6a65b6f8be71e9faf8"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+const saveToLocal = {
+  // ttl 單位是 天
+  set: function setWithExpiry(key, value, ttl) {
+    if (ttl === 0) return
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-03 16:29:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Jedges" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://s3.ax1x.com/2021/02/17/ygfbtS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间线</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 休闲</span><i class="fas fa-chevron-down expand hide"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/cover%20(6).jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jedges</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间线</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 休闲</span><i class="fas fa-chevron-down expand hide"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">程设C++-面向对象</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-03T07:41:17.000Z" title="发表于 2021-02-03 15:41:17">2021-02-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-02-03T08:29:02.007Z" title="更新于 2021-02-03 16:29:02">2021-02-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/note/">note</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>面向对象与过程</h1>
+<h2 id="面向对象程序设计">面向对象程序设计</h2>
+<ul>
+<li>一个面向对象程序由一些对象构成</li>
+<li>对象是由一些数据及可施于这些数据上的操作所组成的封装体，</li>
+<li>对数据的操作是通过向包含数据的对象发送消息（调用对象提供的操作）来实现。</li>
+<li>对象的特征由相应的类来描述，一个类的特征可以从其它的类继承。</li>
+<li>面向对象程序的执行过程体现为各个对象之间相互发送和处理消息。</li>
+</ul>
+<h3 id="数据抽象与封装。">数据抽象与封装。</h3>
+<ol>
+<li>数据抽象</li>
+</ol>
+<blockquote>
+<p>数据的使用者只需要知道对数据能实施那些操作以及这些 操作之间的关系，而不必知道数据的具体表示形式。</p>
+</blockquote>
+<ol start="2">
+<li>封装</li>
+</ol>
+<blockquote>
+<p>把数据及其操作作为一个整体来进行实现。（封装）<br>
+数据的具体表示对使用者是不可见的，对数据的访问（使用）只能通过封装体所提供的对外接口（允许的操作）来完成。</p>
+</blockquote>
+<ol start="3">
+<li>数据抽象与封装是面向对象程序设计的基础</li>
+</ol>
+<ul>
+<li>实例：栈数据的实现<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">const</span> <span class="keyword">int</span> STACK_SIZE=<span class="number">100</span>;</span><br><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span></span><br><span class="line"><span class="class"> &#123;</span>	 </span><br><span class="line">   <span class="keyword">public</span>: <span class="comment">//对外的接口（外部可使用的内容）</span></span><br><span class="line">  Stack();</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> i)</span></span>;</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">(<span class="keyword">int</span> &amp;i)</span></span>;</span><br><span class="line">   <span class="keyword">private</span>: <span class="comment">//隐藏的内容，外部不可使用</span></span><br><span class="line">   <span class="keyword">int</span> top;</span><br><span class="line">    <span class="keyword">int</span> buffer[STACK_SIZE];</span><br><span class="line"> &#125;;</span><br><span class="line">Stack st;  <span class="comment">//会自动地去调用st.Stack()对st进行初始化。</span></span><br><span class="line"> <span class="keyword">int</span> x;</span><br><span class="line"> st.push(<span class="number">12</span>);  <span class="comment">//把12放进栈st。</span></span><br><span class="line"> ......</span><br><span class="line"> st.pop(x);  <span class="comment">//把栈顶元素退栈并存入变量x。</span></span><br><span class="line"> ......</span><br><span class="line"> st.top = <span class="number">-1</span>;  <span class="comment">//Error</span></span><br><span class="line"> st.top++;  <span class="comment">//Error</span></span><br><span class="line"> st.buffer[st.top] = <span class="number">12</span>;  <span class="comment">//Error</span></span><br><span class="line"> st.f(); <span class="comment">//Error</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="类">类</h3>
+<ol>
+<li><strong>对象构成了面向对象程序设计的·1基本计算单位，而对象的特征则有相应的类来描述</strong></li>
+<li>定义： class &lt;类名&gt; { &lt;成员描述&gt; } ;
+<ul>
+<li>成员包括：数据成员和成员函数。</li>
+<li>类成员标识符的作用域为整个类定义范围。</li>
+</ul>
+</li>
+<li>类成员的访问控制(默认访问控制为private)
+<ul>
+<li>private：不受限制。</li>
+<li>public：只能在本类和友元的代码中访问。</li>
+<li>protected: 只能在本类、派生类和友元的代码中访问。</li>
+</ul>
+</li>
+</ol>
+<h4 id="成员函数">成员函数</h4>
+<ol>
+<li>成员函数是对类成员所能实施的操作描述。</li>
+<li>成员函数的实现可以放在类定义中。也可以放在类定义外。但需要进行声明。并且定义是需要用类名受限，区别于全局函数。</li>
+<li>成员函数可以重载。遵循一般规则。</li>
+</ol>
+<h4 id="数据成员">数据成员</h4>
+<ul>
+<li>类的数据成员可以是c++任何类型。但是，在声明一个数据或成员的类型时，如果未见到相应类型的定义或定义未完成时，则该成员的类型一般只是这些类型的引用和指针类型。</li>
+</ul>
+<h4 id="对象">对象</h4>
+<blockquote>
+<p>类属于类型范畴的程序实体，它一般存在于静态（运行前）的程序中。而动态（运行中）的面向对象程序则是由对象构成。对象在程序运行时创建。</p>
+</blockquote>
+<h5 id="对象的操作：">对象的操作：</h5>
+<ul>
+<li>通过调用类的成员函数对其对象a进行操作；  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   A a; 	<span class="comment">//创建A类的一个局部对象a。</span></span><br><span class="line">a.f(); 	<span class="comment">//调用A类的成员函数f对对象a进行操作。</span></span><br><span class="line">A *p=<span class="keyword">new</span> A;	 <span class="comment">//创建A类的一个动态对象，p指向之。</span></span><br><span class="line">p-&gt;f(); 	<span class="comment">//调用A类的成员函数f对p所指向的对象进行操作。</span></span><br><span class="line"><span class="keyword">delete</span> p;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在类的外部，通过对象来访问类的成员时要受到类成员访问控制的限制。</li>
+</ul>
+</li>
+<li>同类对象之间可以互相赋值。</li>
+<li>可以把对象作为实参传给函数。</li>
+<li>把对象作为函数的返回值。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Date <span class="title">f</span><span class="params">(Date &amp;d)</span></span></span><br><span class="line"><span class="function"></span>&#123;<span class="keyword">return</span> d;&#125;<span class="comment">//创建一个临时对象作为返回值，用d对其进行初始化。</span></span><br><span class="line"><span class="function">Date&amp; <span class="title">g</span><span class="params">(Date &amp;d)</span></span></span><br><span class="line"><span class="function"></span>&#123;<span class="keyword">return</span> d;&#125;<span class="comment">//不创建对象，将对象d作为返回对象</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="构造函数">构造函数</h5>
+<ol>
+<li>在使用对象前，需要对对象储存空间中的数据进行初始化;</li>
+<li>构造函数： 名字与类名相同，无返回值类型。创建对象时，构造函数会自动调用来初始化对象的数据成员；</li>
+<li>构造函数可以重载。
+<ul>
+<li>创建对象时，可显示指定调用某个构造函数进行初始化。</li>
+<li>没有指定调用某种函数，则调用默认构造函数。</li>
+<li>一旦定义某种构造函数，则编译器不会在提供默认构造函数。</li>
+</ul>
+</li>
+<li>对于常量和引用数据成员，不能在说明它们时初始化，也不能采用赋值操作在构造函数中对它们初始化。</li>
+<li>成员初始化表：可以在构造函数的函数头和函数体之间加入一个成员初始化表来对常量和引用数据成员进行初始化。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"> &#123;</span>	</span><br><span class="line"> <span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> y;</span><br><span class="line"><span class="keyword">int</span>&amp; z;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">A(): z(x),y(<span class="number">1</span>)  <span class="comment">//成员初始化表</span></span><br><span class="line">&#123;</span><br><span class="line">    x = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当类中有常量数据成员和引用数据成员时，如果没有定义构造函数，编译器不会生成默认构造函数，因为无法对常量和引用类型进行初始化。所以一定要在成员初始化表中对他们进行初始化。</li>
+</ul>
+</li>
+</ol>
+<h5 id="对象的消亡前处理————析构函数">对象的消亡前处理————析构函数</h5>
+<ul>
+<li>析构函数，它的名字为“~&lt;类名&gt;”，没有返回类型、不带参数、不能被重载。</li>
+<li>一个对象消亡时，系统在收回它的内存空间之前，将会自动调用析构函数。</li>
+<li>可以在析构函数中完成对象被删除前的一些清理工作（如：归还对象额外申请的内存空间）（比如对象自己申请的动态变量）。</li>
+</ul>
+<h5 id="拷贝构造函数">拷贝构造函数</h5>
+<ul>
+<li>在创建一个对象时，若用一个对象本类对其进行初始化，则需要拷贝构造函数。</li>
+<li>拷贝函数的参数类型为本类的引用</li>
+<li>拷贝构造函数的参数类型为本类的引用。例如：</li>
+</ul>
+   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    A();  <span class="comment">//默认构造函数</span></span><br><span class="line">    A(<span class="keyword">const</span> A&amp; a);  <span class="comment">//拷贝构造函数</span></span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+<ul>
+<li>隐式拷贝构造函数。</li>
+<li>当初始化时含有指针时，隐式构造函数会将两个对象的指针指向同一块内存区域。并且在其中一个消亡后，会使得另一个也无法正常使用，所以需要自己定义新的拷贝构造函数。</li>
+</ul>
+<h5 id="this指针">this指针</h5>
+<ul>
+<li>每一个成员函数都有一个隐藏的形参this。通常情况下可以省略不写，但如果成员函数中要把this所指向的对象作为一个整体进行操作，则必须显示的使用this指针。</li>
+</ul>
+<h5 id="常成员函数">常成员函数</h5>
+<p>1.定义：</p>
+   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;……&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>表示该函数只改变数据成员的状态，而不修改数据成员的值。
+<ul>
+<li>但是可以改变指针所指向的对象的值。</li>
+</ul>
+</li>
+<li>对常量对象进行调用非const成员函数非法。</li>
+</ol>
+<h4 id="操作符重载">操作符重载</h4>
+<ol>
+<li>部分操作符不可以进行重载，比如:<strong>“.(成员选择符)”，“::(域解析符)”，“?:(条件操作符)”，“sizeof(数据占内存大小)”，“.*(间接成员选择符)”;</strong></li>
+<li>类默认提供赋值操作符重载。</li>
+</ol>
+<h5 id="单目操作符重载">单目操作符重载</h5>
+<h5 id="双目操作符重载">双目操作符重载</h5>
+<ol>
+<li>作为成员函数重载
+<ul>
+<li>因为作为成员函数有一个隐藏的指针，因此双目操作符只需要给出一个参数(作为第二个操作数)</li>
+</ul>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> 类名</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ……</span><br><span class="line">    &lt;返回值类型&gt; <span class="keyword">operator</span> # (&lt;类型&gt;); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>作为全局函数重载</li>
+</ol>
+<h5 id="特殊操作符重载">特殊操作符重载</h5>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jedges</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jedges.top/2021/02/03/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">https://jedges.top/2021/02/03/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jedges.top" target="_blank">Jedges</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/c/">c++</a></div><div class="post_share"><div class="social-share" data-image="/img/cover%20(6).jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/02/05/Katex%E5%85%AC%E5%BC%8F%E5%AE%9E%E9%AA%8C/"><img class="prev-cover" src="/img/cover%20(1).jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Katex公式实验</div></div></a></div><div class="next-post pull-right"><a href="/2021/02/03/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-C/"><img class="next-cover" src="/img/cover%20(5).jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">程设C++-指针</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/03/12/位域/" title="位域"><img class="cover" src="/img/cover%20(3).jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-12</div><div class="title">位域</div></div></a></div><div><a href="/2021/02/03/程序设计-C/" title="程设C++-指针"><img class="cover" src="/img/cover%20(5).jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-03</div><div class="title">程设C++-指针</div></div></a></div><div><a href="/2021/01/29/VScode配置C-环境/" title="VScode配置C\C++环境"><img class="cover" src="/img/cover%20(7).jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-29</div><div class="title">VScode配置C\C++环境</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">面向对象与过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.1.</span> <span class="toc-text">面向对象程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%8A%BD%E8%B1%A1%E4%B8%8E%E5%B0%81%E8%A3%85%E3%80%82"><span class="toc-number">1.1.1.</span> <span class="toc-text">数据抽象与封装。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-number">1.1.2.</span> <span class="toc-text">类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">成员函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">数据成员</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="toc-number">1.1.2.3.1.</span> <span class="toc-text">对象的操作：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.2.3.2.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%B6%88%E4%BA%A1%E5%89%8D%E5%A4%84%E7%90%86%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.2.3.3.</span> <span class="toc-text">对象的消亡前处理————析构函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.2.3.4.</span> <span class="toc-text">拷贝构造函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#this%E6%8C%87%E9%92%88"><span class="toc-number">1.1.2.3.5.</span> <span class="toc-text">this指针</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.2.3.6.</span> <span class="toc-text">常成员函数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">操作符重载</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E7%9B%AE%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">1.1.2.4.1.</span> <span class="toc-text">单目操作符重载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%8C%E7%9B%AE%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">1.1.2.4.2.</span> <span class="toc-text">双目操作符重载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">1.1.2.4.3.</span> <span class="toc-text">特殊操作符重载</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('/url(https:/s3.ax1x.com/2021/01/29/yCtu0s.jpg)')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Jedges</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi,welcom to my log cabin!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'InnFyniFiYKYm6AV2kFk38iU-gzGzoHsz',
+      appKey: 'FHlypCWGYWNrULV5sTr0U2br',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

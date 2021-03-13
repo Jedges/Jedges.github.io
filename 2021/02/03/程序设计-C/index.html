@@ -1,0 +1,373 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>程设C++-指针 | Jedges</title><meta name="keywords" content="c++,指针"><meta name="author" content="Jedges"><meta name="copyright" content="Jedges"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="指针 指针的运算符   间接接引用：*  ,—&gt;(对结构体成员进行访）   取地址符：&amp;   指针的初始化  建议在定义指针所指向的变量后在对指针进行定义，避免指针所指向一个不存在的地址  指针的运算 指针的运算取决于其所指向的数据类型。 ex. 1.    1234int x;int *p;p &#x3D; &amp;x + 2;  &#x2F;&#x2F;p的值为x的地址加上sizeof(int)*2后得到的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程设C++-指针">
+<meta property="og:url" content="https://jedges.top/2021/02/03/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-C/index.html">
+<meta property="og:site_name" content="Jedges">
+<meta property="og:description" content="指针 指针的运算符   间接接引用：*  ,—&gt;(对结构体成员进行访）   取地址符：&amp;   指针的初始化  建议在定义指针所指向的变量后在对指针进行定义，避免指针所指向一个不存在的地址  指针的运算 指针的运算取决于其所指向的数据类型。 ex. 1.    1234int x;int *p;p &#x3D; &amp;x + 2;  &#x2F;&#x2F;p的值为x的地址加上sizeof(int)*2后得到的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jedges.top/img/cover%20(5).jpg">
+<meta property="article:published_time" content="2021-02-03T07:36:53.000Z">
+<meta property="article:modified_time" content="2021-02-14T09:02:21.194Z">
+<meta property="article:author" content="Jedges">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="指针">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jedges.top/img/cover%20(5).jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jedges.top/2021/02/03/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-C/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="msvalidate.01" content="90cd84211e5b1a6a65b6f8be71e9faf8"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+const saveToLocal = {
+  // ttl 單位是 天
+  set: function setWithExpiry(key, value, ttl) {
+    if (ttl === 0) return
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-14 17:02:21'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Jedges" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://s3.ax1x.com/2021/02/17/ygfbtS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间线</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 休闲</span><i class="fas fa-chevron-down expand hide"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/cover%20(5).jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jedges</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间线</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 休闲</span><i class="fas fa-chevron-down expand hide"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">程设C++-指针</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-03T07:36:53.000Z" title="发表于 2021-02-03 15:36:53">2021-02-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-02-14T09:02:21.194Z" title="更新于 2021-02-14 17:02:21">2021-02-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/note/">note</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>指针</h1>
+<h2 id="指针的运算符">指针的运算符</h2>
+<ul>
+<li>
+<p>间接接引用：<strong>*</strong>  ,<strong>—&gt;(对结构体成员进行访）</strong></p>
+</li>
+<li>
+<p>取地址符：&amp;</p>
+</li>
+</ul>
+<h2 id="指针的初始化">指针的初始化</h2>
+<pre><code> 建议在定义指针所指向的变量后在对指针进行定义，避免指针所指向一个不存在的地址
+</code></pre>
+<h2 id="指针的运算">指针的运算</h2>
+<p>指针的运算取决于其所指向的数据类型。<br>
+ex.<br>
+1.</p>
+   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">int</span> *p;</span><br><span class="line">p = &amp;x + <span class="number">2</span>;  <span class="comment">//p的值为x的地址加上sizeof(int)*2后得到的地址</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li></li>
+</ol>
+   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p,*q; </span><br><span class="line">q-p <span class="comment">//结果为：(q的值-p的值)/sizeof(int)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="指针的作用">指针的作用</h2>
+<h3 id="作为形参传递">作为形参传递</h3>
+<ol>
+<li>
+<p>指针类型的常量&amp;指向常量的指针</p>
+<pre><code>指针类型的常量：储存地址固定，可以改变其指向变量的值。
+指向常量的指针：指针指向的地址可以改变，但其指向数据的值无法改变。
+</code></pre>
+<p>ex.</p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *p; <span class="comment">//p为指向常量的指针变量</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> x=<span class="number">0</span>;</span><br><span class="line">p = &amp;x;  <span class="comment">//OK</span></span><br><span class="line">*p = <span class="number">1</span>;  <span class="comment">//Error</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">int</span> x,y;</span><br><span class="line"> <span class="keyword">int</span> *<span class="keyword">const</span> p=&amp;x;  <span class="comment">//定义了一个指针类型的常量p，</span></span><br><span class="line"><span class="comment">//p初始化为指向x（常量定义需要初始化）</span></span><br><span class="line"> p = &amp;y;  <span class="comment">//Error，p是一个常量，其值不能被修改</span></span><br><span class="line"> *p = <span class="number">1</span>;  <span class="comment">//OK，*p是一个变量，值可以被修改</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>不把局部量的地址作为函数返回值。(函数局部量的地址在函数结束时已经被收回)</p>
+</li>
+</ol>
+<h3 id="访问数组元素">访问数组元素</h3>
+<p>ex.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">100</span>];</span><br><span class="line"><span class="keyword">int</span> *p;</span><br><span class="line">p=a;<span class="comment">//a的地址即为a数组的首地址；</span></span><br><span class="line">*(p+<span class="number">1</span>)=a[<span class="number">1</span>];</span><br><span class="line">p[<span class="number">1</span>]=a[<span class="number">1</span>];</span><br></pre></td></tr></table></figure>
+<h3 id="访问动态变量">访问动态变量</h3>
+<h4 id="动态变量">动态变量</h4>
+<ul>
+<li>在程序运行中，根据需要创建的变量。</li>
+<li>生成 new (type)  // (type *)malloc(sizeof(type);</li>
+<li>动态变量需要<strong>显示</strong>的撤销 delete p //delete [ ]p  // free§
+<ul>
+<li>new创建的动态变量用delete撤销，malloc创建的用free来撤销*</li>
+<li>撤销动态数组时，指针变量必须指向数组的第一个元素</li>
+<li>悬浮指针：撤销动态变量后，指针指向一个无效空间，而不是默认为0；</li>
+</ul>
+</li>
+<li>动态变量存储于堆空间中，动态变量没有名字，只能通过指针进行间接访问</li>
+</ul>
+<h4 id="动态数组">动态数组</h4>
+<p>1.数组的大小是一个输入的变量。</p>
+   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n,*p;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">p = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++) <span class="built_in">cin</span> &gt;&gt; p[i];</span><br><span class="line">sort(p,n);</span><br><span class="line">......</span><br><span class="line"><span class="keyword">delete</span> []p;</span><br></pre></td></tr></table></figure>
+<p>2.数组的大小完全不知道，取决于输入数的多少。先申请较小的空间，根据情况进行重新申请。</p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">const</span> <span class="keyword">int</span> INCREMENT=<span class="number">10</span>;</span><br><span class="line"> <span class="keyword">int</span> max_len=<span class="number">20</span>,*p=<span class="keyword">new</span> <span class="keyword">int</span>[max_len],count=<span class="number">0</span>,x;</span><br><span class="line"> <span class="built_in">cin</span> &gt;&gt; x;</span><br><span class="line"> <span class="keyword">while</span> (x != <span class="number">-1</span>) </span><br><span class="line"> &#123;	<span class="keyword">if</span> (count &gt;= max_len)</span><br><span class="line">&#123;	max_len += INCREMENT;</span><br><span class="line">	<span class="keyword">int</span> *q=<span class="keyword">new</span> <span class="keyword">int</span>[max_len]; <span class="comment">//重新申请一块更大的空间</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;count; i++) q[i] = p[i]; <span class="comment">//转移数据</span></span><br><span class="line">	<span class="keyword">delete</span> []p; <span class="comment">//归还原来的空间</span></span><br><span class="line">	p = q; <span class="comment">//p指向新的空间</span></span><br><span class="line">&#125;</span><br><span class="line">p[count] = x;</span><br><span class="line">count++;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; x;</span><br><span class="line"> &#125;</span><br><span class="line"> sort(p,count);</span><br><span class="line"> ......</span><br><span class="line"> <span class="keyword">delete</span> []p;</span><br></pre></td></tr></table></figure>
+<h4 id="动态变量的应用-链表">动态变量的应用----链表</h4>
+<ul>
+<li>链表用于表示数量不定的同类型所有元素所构成的具有线性结构的复合数据</li>
+<li>(单)链表的每一个元素除了存储本身的数据还要存储指向下一个元素的指针。(这样链表中的元素就不需要连续存储的空间)</li>
+<li>单链表的每个元素称为节点。节点定义类型如下：</li>
+</ul>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> //结点的类型定义</span></span><br><span class="line"><span class="class">&#123;</span>	</span><br><span class="line">  <span class="keyword">int</span> content;  <span class="comment">//存储结点的数据</span></span><br><span class="line"> Node *next;  <span class="comment">//存储下一个结点的地址</span></span><br><span class="line">&#125;;  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>链表的访问：头指针：Node *head=NULL;(初始化为0)；</li>
+</ul>
+<h5 id="链表的操作">链表的操作</h5>
+<ol>
+<li>插入节点</li>
+</ol>
+   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Node *p=<span class="keyword">new</span> Node;  <span class="comment">//创建一个动态变量来表示新结点</span></span><br><span class="line">p-&gt;content = a;  <span class="comment">//给新结点赋上数据（假设为a）</span></span><br></pre></td></tr></table></figure>
+   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//如果链表为空（创建链表的第一个结点时），则进行下面的操作：</span></span><br><span class="line"> <span class="keyword">if</span> (head == <span class="literal">NULL</span>) <span class="comment">//表头指针为空</span></span><br><span class="line">&#123;</span><br><span class="line">   head = p; <span class="comment">//头指针指向新结点。</span></span><br><span class="line">   p-&gt;next = <span class="literal">NULL</span>;  <span class="comment">//或，head-&gt;next = NULL;  </span></span><br><span class="line">		    <span class="comment">//把新结点的next成员置为NULL。v</span></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//如果新结点插在表尾，则进行下面的操作：</span></span><br><span class="line"> Node *q=head;  <span class="comment">//q指向第一个结点</span></span><br><span class="line"> <span class="keyword">while</span> (q-&gt;next != <span class="literal">NULL</span>)  <span class="comment">//循环查找最后一个结点</span></span><br><span class="line">q = q-&gt;next;</span><br><span class="line"> <span class="comment">//循环结束后，q指向链表最后一个结点</span></span><br><span class="line"> q-&gt;next = p;  <span class="comment">//把新结点加到链表的尾部。</span></span><br><span class="line"> p-&gt;next = <span class="literal">NULL</span>; <span class="comment">//把新结点的next成员置为NULL。</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如果新结点插在链表中第i（i&gt;0）个结点（ai）的后面，则进行下面的操作： </span></span><br><span class="line">Node *q=head;</span><br><span class="line"><span class="keyword">int</span> j=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(j&lt;i&gt;)</span><br><span class="line">&#123;</span><br><span class="line">  q=q-&gt;next;</span><br><span class="line">  j++;</span><br><span class="line">&#125;</span><br><span class="line">p-&gt;next=q-&gt;next;</span><br><span class="line">q-&gt;next=p;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>删除节点</li>
+</ol>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//删除头节点</span></span><br><span class="line">Node *p=head;</span><br><span class="line">head=head-&gt;next;</span><br><span class="line"><span class="keyword">delete</span> p;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//删除尾节点</span></span><br><span class="line">Node *p1=<span class="literal">NULL</span>,*p2=head；</span><br><span class="line"><span class="keyword">while</span>(p2-&gt;next!=<span class="literal">NULL</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    p1=p2;</span><br><span class="line">    p2=p1-&gt;next；</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">if</span>(p1==<span class="literal">NULL</span>) head=<span class="literal">NULL</span>;</span><br><span class="line"><span class="keyword">else</span> p1-&gt;next=<span class="literal">NULL</span>；</span><br><span class="line"><span class="keyword">delete</span> p2;<span class="comment">//节点是动态变量，需要显示删除。而定义的p1，p2；</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//删除第i(i!=1)个节点,</span></span><br><span class="line"><span class="comment">//删除第1个节点，即删除头节点。</span></span><br><span class="line">Node *p1=<span class="literal">NULL</span>,*p2=head;</span><br><span class="line"><span class="keyword">int</span> j=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span>(j&lt;=i)</span><br><span class="line">&#123;</span><br><span class="line">  p1=p2;</span><br><span class="line">  p2=p2-&gt;next;</span><br><span class="line">  j++</span><br><span class="line">&#125;<span class="comment">//p1是第i-1个节点，p2是第i个节点，指向第i+1个节点。</span></span><br><span class="line">p1=p2-&gt;next;</span><br><span class="line"><span class="keyword">delete</span> p2;</span><br><span class="line"><span class="comment">//具体需要判断是否有第i个节点。</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>链表检索 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>  n,j=<span class="number">1</span>;</span><br><span class="line"><span class="built_in">cin</span>&gt;&gt;n;(对n进行检索)</span><br><span class="line">Node *p=head;</span><br><span class="line"><span class="keyword">while</span>（p-&gt;content!=n&amp;&amp;p!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">  p=p-&gt;next;</span><br><span class="line">  j++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(p!=<span class="literal">NULL</span>)<span class="built_in">cout</span>&lt;&lt;j;</span><br><span class="line"><span class="keyword">else</span> <span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;不存在&quot;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="指向函数的指针">指向函数的指针</h2>
+<ol>
+<li>定义</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//法一</span></span><br><span class="line"><span class="keyword">double</span> (*fp)(<span class="keyword">int</span>); <span class="comment">//fp是一个指向函数的指针变量</span></span><br><span class="line"><span class="comment">//法二：</span></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">double</span> <span class="params">(*FP)</span><span class="params">(<span class="keyword">int</span>)</span></span>; </span><br><span class="line">FP fp;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>对于一个函数，可以用取地址操作符&amp;来获得它的内存地址，或直接用函数名来表示。</li>
+</ol>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; ... &#125;;</span><br><span class="line">fp = &amp;f; <span class="comment">//或者，fp = f; </span></span><br><span class="line"><span class="comment">//通过函数指针调用函数可采用下面的形式：</span></span><br><span class="line">(*fp)(<span class="number">10</span>); <span class="comment">//或者，fp(10);</span></span><br></pre></td></tr></table></figure>
+<h3 id="构建函数表">构建函数表</h3>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX_LEN=<span class="number">8</span>;</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">double</span> <span class="params">(*FP)</span><span class="params">(<span class="keyword">double</span>)</span></span>;</span><br><span class="line">FP func_list[MAX_LEN]=&#123;<span class="built_in">sin</span>,<span class="built_in">cos</span>,<span class="built_in">tan</span>,<span class="built_in">asin</span>,<span class="built_in">acos</span>,<span class="built_in">atan</span>,<span class="built_in">log</span>,<span class="built_in">log10</span>&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;	<span class="keyword">int</span> index;</span><br><span class="line">  <span class="keyword">double</span> x;</span><br><span class="line">  <span class="keyword">do</span>  <span class="comment">//循环以获得正确的输入</span></span><br><span class="line">  &#123;	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;请输入要计算的函数(0:sin 1:cos 2:tan 3:asin\n&quot;</span></span><br><span class="line">          &lt;&lt; <span class="string">&quot;4:acos 5: atan 6:log 7:log10):&quot;</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; index;</span><br><span class="line">  &#125; <span class="keyword">while</span> (index &lt; <span class="number">0</span> || index &gt; <span class="number">7</span>);</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;请输入参数：&quot;</span>;</span><br><span class="line">  <span class="built_in">cin</span> &gt;&gt; x;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;结果为：&quot;</span> &lt;&lt; (*func_list[index])(x) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="向函数传递函数">向函数传递函数</h3>
+<p>ex.</p>
+   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计算一个函数的定积分</span></span><br></pre></td></tr></table></figure>
+<h3 id="回调函数">回调函数</h3>
+<ol>
+<li>一个函数在执行的过程中，需要函数的调用者配合执行一些功能，从而去调用调用者提供的一些函数，该函数称为回调函数。</li>
+<li>ex.<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//编写一个能根据不同要求进行排序的函数</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(Student st[],<span class="keyword">int</span> num,<span class="keyword">bool</span> (*less_than)(Student *st1,Student *st2))</span></span></span><br><span class="line"><span class="function"> </span>&#123; ......</span><br><span class="line"><span class="keyword">if</span> (!less_than(&amp;st[i],&amp;st[j]) <span class="comment">//比较数组元素大小</span></span><br><span class="line">&#123; ...... <span class="comment">//交换st[i]与st[j]</span></span><br><span class="line">&#125;</span><br><span class="line">......</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//增加一个函数指针进行比较根据sort函数提供的函数进行比较。</span></span><br><span class="line"> <span class="keyword">bool</span> less_than_by_no(Student *st1,Student *st2)</span><br><span class="line"> &#123; </span><br><span class="line"> <span class="keyword">return</span> (st1-&gt;no &lt; st2-&gt;no);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">bool</span> less_than_by_name(Student *st1,Student *st2)</span><br><span class="line"> &#123; </span><br><span class="line"> <span class="keyword">return</span> (<span class="built_in">strcmp</span>(st1-&gt;name,st2-&gt;name)&lt;<span class="number">0</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> ......</span><br><span class="line"> Student st[<span class="number">100</span>];</span><br><span class="line"> ......</span><br><span class="line"> sort(st,<span class="number">100</span>, less_than_by_no); <span class="comment">//按学号排序</span></span><br><span class="line"> ......</span><br><span class="line"> sort(st,<span class="number">100</span>, less_than_by_name); <span class="comment">//按姓名排序</span></span><br><span class="line"> ......</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="lambda表达式"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi></mrow><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">λ</span></span></span></span>表达式</h3>
+<h2 id="多级指针">多级指针</h2>
+<ol>
+<li>如果一个指针变量所指向的数据类型又是指针类型，则为多级指针。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> *p=&amp;x;</span><br><span class="line"><span class="keyword">int</span> *（*q)=&amp;p;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">访问变量x：x,*p,**q;</span></span><br><span class="line"><span class="comment">访问变量p：p,*q;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="交换指针变量">交换指针变量</h3>
+<h3 id="指针数组">指针数组</h3>
+<ol>
+<li>指针数组是是指一个元素全是指针的数组。</li>
+<li>当把一个指针数组传给数组时，函数的参数类型是一个多级指针。</li>
+</ol>
+<h2 id="函数main">函数main()</h2>
+<ol>
+<li>主函数的参数 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>argv是一个一维指针数组，其每个元素为一个指向字符串的指针。argv的类型也可写成：char **argv<br>
+argc是argv中元素的个数</p>
+</blockquote>
+</li>
+</ol>
+<h1>引用</h1>
+<p>1.定义</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> &amp;x=y;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>定义时必须初始化。</li>
+<li>定义后无法更改。</li>
+</ul>
+<ol start="2">
+<li>作用
+<ul>
+<li>提高参数传递效率;</li>
+<li>通过形参改变实参的值;</li>
+<li>把形参定义为对常量的引用，防止改变实参的值;</li>
+</ul>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jedges</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jedges.top/2021/02/03/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-C/">https://jedges.top/2021/02/03/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jedges.top" target="_blank">Jedges</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/c/">c++</a><a class="post-meta__tags" href="/tags/%E6%8C%87%E9%92%88/">指针</a></div><div class="post_share"><div class="social-share" data-image="/img/cover%20(5).jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/02/03/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"><img class="prev-cover" src="/img/cover%20(6).jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">程设C++-面向对象</div></div></a></div><div class="next-post pull-right"><a href="/2021/02/03/Algebra-%E7%9F%A9%E9%98%B5/"><img class="next-cover" src="/img/cover%20(7).jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Algebra-矩阵</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/03/12/位域/" title="位域"><img class="cover" src="/img/cover%20(3).jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-12</div><div class="title">位域</div></div></a></div><div><a href="/2021/02/03/程序设计-面向对象/" title="程设C++-面向对象"><img class="cover" src="/img/cover%20(6).jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-03</div><div class="title">程设C++-面向对象</div></div></a></div><div><a href="/2021/01/29/VScode配置C-环境/" title="VScode配置C\C++环境"><img class="cover" src="/img/cover%20(7).jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-29</div><div class="title">VScode配置C\C++环境</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">指针</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.1.</span> <span class="toc-text">指针的运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.2.</span> <span class="toc-text">指针的初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E8%BF%90%E7%AE%97"><span class="toc-number">1.3.</span> <span class="toc-text">指针的运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text">指针的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E5%BD%A2%E5%8F%82%E4%BC%A0%E9%80%92"><span class="toc-number">1.4.1.</span> <span class="toc-text">作为形参传递</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0"><span class="toc-number">1.4.2.</span> <span class="toc-text">访问数组元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E5%8A%A8%E6%80%81%E5%8F%98%E9%87%8F"><span class="toc-number">1.4.3.</span> <span class="toc-text">访问动态变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%8F%98%E9%87%8F"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">动态变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">动态数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%8F%98%E9%87%8F%E7%9A%84%E5%BA%94%E7%94%A8-%E9%93%BE%E8%A1%A8"><span class="toc-number">1.4.3.3.</span> <span class="toc-text">动态变量的应用----链表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">1.4.3.3.1.</span> <span class="toc-text">链表的操作</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E5%90%91%E5%87%BD%E6%95%B0%E7%9A%84%E6%8C%87%E9%92%88"><span class="toc-number">1.5.</span> <span class="toc-text">指向函数的指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%87%BD%E6%95%B0%E8%A1%A8"><span class="toc-number">1.5.1.</span> <span class="toc-text">构建函数表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E5%87%BD%E6%95%B0%E4%BC%A0%E9%80%92%E5%87%BD%E6%95%B0"><span class="toc-number">1.5.2.</span> <span class="toc-text">向函数传递函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="toc-number">1.5.3.</span> <span class="toc-text">回调函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.5.4.</span> <span class="toc-text">λ\lambdaλ表达式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E6%8C%87%E9%92%88"><span class="toc-number">1.6.</span> <span class="toc-text">多级指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2%E6%8C%87%E9%92%88%E5%8F%98%E9%87%8F"><span class="toc-number">1.6.1.</span> <span class="toc-text">交换指针变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E6%95%B0%E7%BB%84"><span class="toc-number">1.6.2.</span> <span class="toc-text">指针数组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0main"><span class="toc-number">1.7.</span> <span class="toc-text">函数main()</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">引用</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('/url(https:/s3.ax1x.com/2021/01/29/yCtu0s.jpg)')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Jedges</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi,welcom to my log cabin!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'InnFyniFiYKYm6AV2kFk38iU-gzGzoHsz',
+      appKey: 'FHlypCWGYWNrULV5sTr0U2br',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
